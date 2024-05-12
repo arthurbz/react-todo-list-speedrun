@@ -14,7 +14,11 @@ export const App: React.FC = (): React.JSX.Element => {
     state.tasks.filter((task) => task.status === "done"),
   );
   const removeTask = taskStore((state) => state.removeTask);
+  const stepForwardTask = taskStore((state) => state.stepForwardTask);
+  const stepBackwardTask = taskStore((state) => state.stepBackwardTask);
   const onDelete = (id: string) => removeTask(id);
+  const stepForward = (id: string) => stepForwardTask(id);
+  const stepBackward = (id: string) => stepBackwardTask(id);
 
   return (
     <Layout style={{ width: "100vw", height: "100vh", gap: 16, padding: 16 }}>
@@ -32,6 +36,8 @@ export const App: React.FC = (): React.JSX.Element => {
                   key={task.id}
                   task={task}
                   onDelete={() => onDelete(task.id)}
+                  stepBackward={() => stepBackward(task.id)}
+                  stepForward={() => stepForward(task.id)}
                 />
               )}
             />
@@ -47,6 +53,8 @@ export const App: React.FC = (): React.JSX.Element => {
                   key={task.id}
                   task={task}
                   onDelete={() => onDelete(task.id)}
+                  stepBackward={() => stepBackward(task.id)}
+                  stepForward={() => stepForward(task.id)}
                 />
               )}
             />
@@ -62,6 +70,8 @@ export const App: React.FC = (): React.JSX.Element => {
                   key={task.id}
                   task={task}
                   onDelete={() => onDelete(task.id)}
+                  stepBackward={() => stepBackward(task.id)}
+                  stepForward={() => stepForward(task.id)}
                 />
               )}
             />

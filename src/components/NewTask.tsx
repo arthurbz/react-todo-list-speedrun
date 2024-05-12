@@ -8,7 +8,7 @@ export const NewTask: React.FC = (): React.JSX.Element => {
   const onFinish = ({ title }: { title: string }) => {
     const id = crypto.randomUUID();
     addTask({ id, title });
-    form.setFieldValue("description", undefined);
+    form.setFieldValue("title", undefined);
   };
   return (
     <Form form={form} layout="inline" onFinish={onFinish}>
