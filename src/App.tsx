@@ -1,35 +1,73 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "@/App.css";
+import { Row, Col, Layout, List, Typography } from "antd";
+import { TaskCard } from "./components/TaskCard";
+import { NewTask } from "./components/NewTask";
+import { taskStore } from "./store";
 
-function App() {
-  const [count, setCount] = useState(0);
+export const App: React.FC = (): React.JSX.Element => {
+  const backlogTasks = taskStore((state) =>
+    state.tasks.filter((task) => task.status === "backlog"),
+  );
+  const doingTasks = taskStore((state) =>
+    state.tasks.filter((task) => task.status === "doing"),
+  );
+  const doneTasks = taskStore((state) =>
+    state.tasks.filter((task) => task.status === "done"),
+  );
+  const removeTask = taskStore((state) => state.removeTask);
+  const onDelete = (id: string) => removeTask(id);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  );
-}
+    <Layout style={{ width: "100vw", height: "100vh", gap: 16, padding: 16 }}>
+      <NewTask />
 
-export default App;
+      <Layout.Content>
+        <Row>
+          <Col span={8}>
+            <Typography.Title level={3}>BACKLOG</Typography.Title>
+            <List
+              itemLayout="vertical"
+              dataSource={backlogTasks}
+              renderItem={(task) => (
+                <TaskCard
+                  key={task.id}
+                  task={task}
+                  onDelete={() => onDelete(task.id)}
+                />
+              )}
+            />
+          </Col>
+
+          <Col span={8}>
+            <Typography.Title level={3}>DOING</Typography.Title>
+            <List
+              itemLayout="vertical"
+              dataSource={doingTasks}
+              renderItem={(task) => (
+                <TaskCard
+                  key={task.id}
+                  task={task}
+                  onDelete={() => onDelete(task.id)}
+                />
+              )}
+            />
+          </Col>
+
+          <Col span={8}>
+            <Typography.Title level={3}>DONE</Typography.Title>
+            <List
+              itemLayout="vertical"
+              dataSource={doneTasks}
+              renderItem={(task) => (
+                <TaskCard
+                  key={task.id}
+                  task={task}
+                  onDelete={() => onDelete(task.id)}
+                />
+              )}
+            />
+          </Col>
+        </Row>
+      </Layout.Content>
+    </Layout>
+  );
+};
