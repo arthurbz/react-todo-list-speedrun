@@ -1,7 +1,7 @@
 import { Row, Col, Layout, List, Typography } from "antd";
 import { TaskCard } from "./components/TaskCard";
 import { NewTask } from "./components/NewTask";
-import { taskStore } from "./store";
+import { taskStore } from "./store/taskStore";
 
 export const App: React.FC = (): React.JSX.Element => {
   const backlogTasks = taskStore((state) =>

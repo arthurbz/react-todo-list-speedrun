@@ -1,6 +1,6 @@
 import { Button, Form, Input } from "antd";
 import { SaveOutlined } from "@ant-design/icons";
-import { taskStore } from "../store";
+import { taskStore } from "../store/taskStore";
 
 export const NewTask: React.FC = (): React.JSX.Element => {
   const [form] = Form.useForm();
